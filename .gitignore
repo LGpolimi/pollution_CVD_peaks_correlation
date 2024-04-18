@@ -6,3 +6,8 @@
 /.idea/project_env.iml
 /.idea/vcs.xml
 /.idea/
+/Include/
+/Lib/
+/Scripts/
+/pyvenv.cfg/
+/pyvenv.cfg
