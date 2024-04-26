@@ -134,7 +134,7 @@ while True:
 df_kpi = pd.DataFrame(columns=['KPI', 'Griglia_Codice'])  # Creazione di un DataFrame vuoto
 
 for idx, (df_poll, df_ems) in enumerate(zip(picchi_POLL, picchi_EMS)):
-    kpi = comparatore(df_poll, df_ems, 'data', 'DATETIME', lag)
+    kpi = comparatore(df_poll, df_ems, 'data', 'DATA', lag)
 
     # Costruzione dinamica del nome della colonna della griglia x ottenere il codice
     col_name = f'LMB{scelta_griglia}_ID'
