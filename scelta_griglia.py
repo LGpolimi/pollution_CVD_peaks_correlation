@@ -32,7 +32,8 @@ def scelta_griglia_geografica():
         # Verifichiamo se la scelta è valida
         if scelta in griglie:
             print(f"Hai scelto la griglia con codice {scelta} - {griglie[scelta]}.")
-            path_griglia = f"C:\\Users\\ASUS\\Desktop\\UNI\\3° ANNO\\PROGETTO\\DATI\\GriglieGeografiche\\LMB{scelta}.shp"
+            #scelta della griglia in base al codice, necessario che abbiano tutte lo stesso percorso
+            path_griglia = f"percorso_cartella contente tutte le griglie\\LMB{scelta}.shp"
             griglia = gpd.read_file(path_griglia)
             return griglia, scelta
         else:
