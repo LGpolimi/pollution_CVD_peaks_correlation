@@ -141,7 +141,7 @@ for idx, (df_poll, df_ems) in enumerate(zip(picchi_POLL, picchi_EMS)):
     kpi_wcodice = (kpi, griglia[f'LMB{scelta_griglia}_IDcu'].iloc[idx])
   
     # Aggiungi i risultati dei KPI alla lista
-    list_kpi.append(kpi)
+    list_kpi.append(kpi_wcodice)
 
 
 #vedere poi cosa fare dei kpi!
