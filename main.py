@@ -135,7 +135,7 @@ list_kpi = []   #lista di tutti i kpi con il codice corrispondente alla griglia 
 
 for idx, (df_poll, df_ems) in enumerate(zip(picchi_POLL, picchi_EMS)):
 
-    kpi = comparatore(df_poll, df_ems, 'data', 'DATETIME', lag)
+    kpi = comparatore(df_poll, df_ems, 'data', 'DATA', lag)
 
     # Aggiungi il valore della colonna 'LMB...' ai risultati dei KPI
     kpi_wcodice = (kpi, griglia[f'LMB{scelta_griglia}_IDcu'].iloc[idx])
