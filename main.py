@@ -131,20 +131,23 @@ while True:
 
 
 #ciclo for x ogni df
-list_kpi = []   #lista di tutti i kpi con il codice corrispondente alla griglia geografica
+df_kpi = pd.DataFrame(columns=['KPI', 'Griglia_Codice'])  # Creazione di un DataFrame vuoto
 
 for idx, (df_poll, df_ems) in enumerate(zip(picchi_POLL, picchi_EMS)):
+    kpi = comparatore(df_poll, df_ems, 'data', 'DATETIME', lag)
 
-    kpi = comparatore(df_poll, df_ems, 'data', 'DATA', lag)
+    # Costruzione dinamica del nome della colonna della griglia x ottenere il codice
+    col_name = f'LMB{scelta_griglia}_ID'
+    possible_suffixes = ['cu', 'is']
+    for suffix in possible_suffixes:
+        full_col_name = f'{col_name}{suffix}'
+        if full_col_name in griglia.columns:
+            codice_griglia = griglia[full_col_name].iloc[idx]
+            break
 
-    # Aggiungi il valore della colonna 'LMB...' ai risultati dei KPI
-    kpi_wcodice = (kpi, griglia[f'LMB{scelta_griglia}_IDcu'].iloc[idx])
-  
-    # Aggiungi i risultati dei KPI alla lista
-    list_kpi.append(kpi_wcodice)
-
-    # crea un df
-    df_kpi = pd.DataFrame(list_kpi, columns=['KPI', 'Griglia_Codice'])
-
+    # Aggiunta della riga al DataFrame
+    df_kpi.loc[idx] = [kpi, codice_griglia]
+    
+########################################################################################################################
 #vedere poi cosa fare dei kpi!
 ########################################################################################################################
