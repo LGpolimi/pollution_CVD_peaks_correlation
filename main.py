@@ -143,6 +143,8 @@ for idx, (df_poll, df_ems) in enumerate(zip(picchi_POLL, picchi_EMS)):
     # Aggiungi i risultati dei KPI alla lista
     list_kpi.append(kpi_wcodice)
 
+    # crea un df
+    df_kpi = pd.DataFrame(list_kpi, columns=['KPI', 'Griglia_Codice'])
 
 #vedere poi cosa fare dei kpi!
 ########################################################################################################################
