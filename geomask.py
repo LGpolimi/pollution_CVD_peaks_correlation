@@ -44,7 +44,7 @@ def geomask_AREU (gdf_griglia, path_AREU):
     # in region_data è salvato il solo dataframe relativo alla zona della griglia.
     # da qui in poi va inserito la funzione di selezione delle misure
 
-        elenco_df[df] = conta(df_region,'DATETIME')
+        elenco_df[df] = conta(df_region,'DATA')
         df += 1
         idx += 1
     return elenco_df
