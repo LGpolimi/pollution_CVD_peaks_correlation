@@ -17,9 +17,6 @@ def comparatore(dsPOLL, dsEMS, colonnadataPOLL, colonnadataEMS, lag_giorni):
             differenza_giorni = abs((data1 - data2).days)
             if differenza_giorni <= lag_giorni:
                 matching += 1
-                # Una volta trovato un match va interrotto il ciclo x il primo segnale (ho gia trovato il match)   //
-                # oppure tenere anche piu di un picco ???????
-                break
 
     kpi = (matching / (len(dsPOLL) + len(dsEMS))) * 100
 
