@@ -17,7 +17,16 @@ def comparatore(dsPOLL, dsEMS, colonnadataPOLL, colonnadataEMS, lag_giorni):
             differenza_giorni = abs((data1 - data2).days)
             if differenza_giorni <= lag_giorni:
                 matching += 1
+                # Puoi registrare il match trovato, ad esempio, aggiungendolo a una lista
+                # matches.append((index1, index2))  # Dove index1 e index2 sono gli indici dei picchi di POLL e EMS
+                break
 
-    kpi = (matching / (len(dsPOLL) + len(dsEMS))) * 100
+    if len(dsPOLL) == 0:
+        kpi = 0
+    else:
+        kpi = (matching / (len(dsPOLL))) * 100
 
-    return kpi
+    ###########################################################################à
+
+    return kpi, matching, len(dsPOLL), len(dsEMS)
+
