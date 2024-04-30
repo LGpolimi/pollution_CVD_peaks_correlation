@@ -53,9 +53,7 @@ def geomask_AREU (gdf_griglia, path_AREU):
 ########################################################################################################################
 
 
-def geomask_CAMS(gdf_griglia, path_CAMS):
-
-    gdf_CAMS = gpd.read_file(path_CAMS)
+def geomask_CAMS(gdf_griglia, gdf_CAMS):
 
     print('\n \nIl dataframe CAMS verrà suddiviso in:', len(gdf_griglia), 'zone')
     print(gdf_CAMS.columns)
