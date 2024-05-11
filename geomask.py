@@ -13,6 +13,47 @@ def measure_max (df, col_date, col_value):
     return max_x_data_df
 
 ########################################################################################################################
+
+def weighted_mean(gdf, date_column, value_column):
+    """
+    Calcola la media pesata dei valori per ogni data nel GeoDataFrame gdf,
+    tenendo conto dell'area dei poligoni associati.
+
+    Args:
+    gdf (GeoDataFrame): GeoDataFrame contenente i dati.
+    date_column (str): Nome della colonna che contiene le date.
+    value_column (str): Nome della colonna che contiene i valori da mediare.
+
+    Returns:
+    DataFrame: Un DataFrame che contiene la data e la media pesata dei valori per quella data.
+    """
+    weighted_means = []
+
+    # Raggruppa il GeoDataFrame per data
+    grouped = gdf.groupby(date_column)
+
+    for date, group in grouped:
+        # Calcola l'area di ogni poligono
+        areas = group.geometry.area
+        # Calcola la somma dei valori pesati per ciascun poligono
+        weighted_sum = (group[value_column] * areas).sum()
+        # Calcola la somma delle aree dei poligoni
+        total_area = areas.sum()
+        # Calcola la media pesata dividendo la somma pesata per la somma delle aree
+        if total_area == 0:
+            weighted_mean = 0  # Evita divisione per zero
+        else:
+            weighted_mean = weighted_sum / total_area
+        # Aggiungi la data e la media pesata alla lista
+        weighted_means.append([date, weighted_mean])
+
+    # Crea un DataFrame con i risultati
+    result_df = pd.DataFrame(weighted_means, columns=[date_column, 'media_pesata'])
+
+    return result_df
+
+########################################################################################################################
+
 def conta(df_EMS, col_data):
     # Conta le occorrenze di ciascuna data nella colonna 'data'
     conteggio_date = df_EMS[col_data].value_counts().reset_index(name='conteggio')
@@ -72,8 +113,13 @@ def geomask_CAMS(gdf_griglia, gdf_CAMS):
         # in region_data è salvato il solo dataframe relativo alla zona della griglia.
         # da qui in poi va inserito la funzione di selezione delle misure
 
-        sgn = measure_max(gdf_x_region, 'data', 'VALUE')
-        list_sgn.append(sgn)
+
+        #sgn = measure_max(gdf_x_region, 'data', 'VALUE')               #PER IL MASSIMO DI ogni zona
+
+        sgn = weighted_mean(gdf_x_region, 'data', 'VALUE')      #X LA MEDIA PESATA di ogni zona
+
+
+        list_sgn.append(sgn)  #lista con tutti i dataframe
 
         idx += 1
 
