@@ -15,7 +15,7 @@ def comparatore(dsPOLL, dsEMS, colonnadataPOLL, colonnadataEMS, lag_giorni):
 
             # Calcola la differenza in giorni tra le due date  --->  data limite compresa
             differenza_giorni = abs((data1 - data2).days)
-            if differenza_giorni <= lag_giorni:
+            if differenza_giorni == lag_giorni:
                 matching += 1
                 # Puoi registrare il match trovato, ad esempio, aggiungendolo a una lista
                 # matches.append((index1, index2))  # Dove index1 e index2 sono gli indici dei picchi di POLL e EMS
