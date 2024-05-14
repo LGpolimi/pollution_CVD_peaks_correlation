@@ -1,9 +1,17 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 
-#calcolo picchi, uguale per inquinamento e dati sanitari
+########################################################################################################################
+
+# calcolo picchi percentile, uguale per inquinamento e dati sanitari
 
 def peaks_perc(dataframe, colonna, percentile):
+
+    # Verifica se la colonna esiste nel dataframe e se non è vuota    UTILE PER GRIGLIE PICCOLE!!
+    if colonna not in dataframe.columns or dataframe[colonna].empty:
+        # Se la colonna non esiste o è vuota, restituisci una colonna vuota
+        return pd.DataFrame(columns=dataframe.columns)
+
     # Ottieni i dati dalla colonna specificata del df
     dati = dataframe[colonna]
 
@@ -17,4 +25,21 @@ def peaks_perc(dataframe, colonna, percentile):
 
 ########################################################################################################################
 
-#implementare funzione per soglia legale, etc...
+
+# picco con soglia legale
+
+def peaks_soglialegale(dataframe, colonna, valore_soglia):
+
+    # Verifica se la colonna esiste nel dataframe e se non è vuota      UTILE PER GRIGLIE PICCOLE!!
+    if colonna not in dataframe.columns or dataframe[colonna].empty:
+        # Se la colonna non esiste o è vuota, restituisci una colonna vuota
+        return pd.DataFrame(columns=dataframe.columns)
+
+    valori_sopra_soglia = dataframe[dataframe[colonna] > valore_soglia]
+
+    return  valori_sopra_soglia
+
+########################################################################################################################
+
+# CONTINUITA' dei picchi ??????
+
