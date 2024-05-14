@@ -7,7 +7,7 @@
 2. **Compilare il file Excel in ogni campo** (nella riga sotto al titolo, consultare il file ESEMPIO per dubbi).
    
    - **INQUINANTE, ANNO:** Nome dell’inquinante, anno (o triennio) di riferimento.
-   - **PERCORSI:** Percorsi indicati (senza virgolette “ ‘).
+   - **PERCORSI:** Percorsi indicati (senza virgolette '“ ‘').
    - **PERCORSO KPI:** Cartella dove si vuole salvare i KPI da lag0 a lag7.
    - **SCELTA GRIGLIA:** Codice della griglia geografica SENZA SPAZI (es: 3A).
    - **PERCENTILI:** Valori numerici di percentili richiesti.
