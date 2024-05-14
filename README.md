@@ -12,5 +12,5 @@
    - **SCELTA GRIGLIA:** Codice della griglia geografica SENZA SPAZI (es: 3A).
    - **PERCENTILI:** Valori numerici di percentili richiesti.
    - **MAX or MEAN:** Scelta tra utilizzare il valore massimo (MAX) o la media pesata (MEAN) dell’inquinante per ogni cella della griglia geografica, SENZA SPAZI.
-   - **PERC or SOGLIA:** Scelta tra percentile (PERC) o soglia (SOGLIA) per i dati di inquinamento atmosferico.
+   - **PERC or SOGLIA:** Scelta tra percentile (PERC) o soglia (SOGLIA) per i dati di inquinamento atmosferico, SENZA SPAZI.
    - **VALORE DI SOGLIA:** Valore numerico soglia legale (esempio per il PM2.5 = 25).
