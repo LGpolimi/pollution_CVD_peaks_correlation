@@ -4,7 +4,7 @@
 
    - *Nota:* È necessaria la libreria “openpyxl” per aprire il file.
 
-2. **Compilare il file Excel in ogni campo** (consultare il file ESEMPIO per dubbi).
+2. **Compilare il file Excel in ogni campo** (nella riga sotto al titolo, consultare il file ESEMPIO per dubbi).
    
    - **INQUINANTE, ANNO:** Nome dell’inquinante, anno (o triennio) di riferimento.
    - **PERCORSI:** Percorsi indicati (senza virgolette “ ‘).
