@@ -15,7 +15,7 @@
    - **PERC or SOGLIA:** Scelta tra percentile (PERC) o soglia (SOGLIA) per i dati di inquinamento atmosferico, SENZA SPAZI.
    - **VALORE DI SOGLIA:** Valore numerico soglia legale (esempio per il PM2.5 = 25).
 
-3. **Per salvare iterativamente i KPI dei vari percentili**
+3. **Per salvare iterativamente i KPI dei vari percentili  --> usare 'main2'**
 
    - **Seguire le specifiche descritte al punto 2**
    - **PERCORSO POPOLAZIONE** = Percorso del file contenente i dati griglie sulla popolazione (SENZA virgolette)
