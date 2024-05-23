@@ -19,5 +19,5 @@
 
    - **Seguire le specifiche descritte al punto 2**
    - **PERCORSO POPOLAZIONE** = Percorso del file contenente i dati griglie sulla popolazione (SENZA virgolette)
-   - **PERCENTILI MAX e MIN **= Massimo e minimo percentile desiderato (COMPRESI), sia POLL che EMS
-   - **PASSO **= Passo desiderato tra i vari percentili, POLL  e EMS
+   - **PERCENTILI MAX e MIN** = Massimo e minimo percentile desiderato (COMPRESI), sia POLL che EMS
+   - **PASSO** = Passo desiderato tra i vari percentili, POLL  e EMS
