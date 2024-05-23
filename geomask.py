@@ -76,9 +76,7 @@ def conta(df_EMS, col_data):
 ########################################################################################################################
 
 
-def geomask_AREU (gdf_griglia, path_AREU):
-
-    gdf_AREU = gpd.read_file(path_AREU)
+def geomask_AREU (gdf_griglia, gdf_AREU):
 
     print('\n \nIl dataframe AREU verrà suddiviso in', len(gdf_griglia), 'zone')
     print(gdf_AREU.columns)
