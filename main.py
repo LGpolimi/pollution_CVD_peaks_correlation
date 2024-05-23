@@ -65,6 +65,7 @@ scelta_PERCENTILEorSOGLIA = file_excel['PERC or SOGLIA'].iloc[0]
 
 df_CAMS = gpd.read_file(CAMS_path)
 griglia = gpd.read_file(griglia_path)
+df_AREU = gpd.read_file(EMS_path)
 
 
 # Salva i picchi CAMS sul totale (NO geomask)
@@ -94,7 +95,7 @@ picchi_POLL = geomask_CAMS(griglia, df_picchi_cams, scelta_MAXorMEAN)
 
 
 # elenco di dataframe (uno ogni cella della griglia) + conta chiamate al giorno
-elenco_df_EMS = geomask_AREU(griglia, EMS_path)
+elenco_df_EMS = geomask_AREU(griglia, df_AREU)
 
 
 # media mobile 3 gg prima dei picchi ems
@@ -104,7 +105,7 @@ for df in elenco_df_EMS:
 
 
 # picco usando il valore di media mobile
-picchi_EMS = [peaks_perc(df, 'conteggio', perc_EMS) for df in elenco_df_EMS]
+picchi_EMS = [peaks_perc(df, 'mediamobile', perc_EMS) for df in elenco_df_EMS]
 
 
 ########################################################################################################################
