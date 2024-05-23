@@ -114,7 +114,8 @@ for lag in range(8):
 
 
     # Iterazione sui percentili degli inquinanti (funzione numpy che dipende dal passo)
-    for perc_POLL in np.arange(perc_EMS_MIN, perc_EMS_MAX + passo_EMS, passo_EMS):
+    for perc_POLL in np.arange(perc_POLL_MIN, perc_POLL_MAX + passo_POLL, passo_POLL):
+
 
         print(f"perc POLL =  {perc_POLL} \n ")   # per vedere a che punto siamo
 
