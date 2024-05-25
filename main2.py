@@ -86,18 +86,13 @@ df_popolazione = df_popolazione.sort_values(by='LMB3A_IDcu')  # serve per ordina
 elenco_df_EMS = geomask_AREU(griglia, df_AREU)
 
 
-# normalizzazione su scala di 100 000 abitanti
-# Itera attraverso ciascun DataFrame e normalizza la colonna 'conteggio' utilizzando la popolazione corrispondente.
-for i, df in enumerate(elenco_df_EMS):
-    popolazione = df_popolazione.iloc[i]['POP_2018']
-    df['conteggio_normalizzato'] = df['conteggio'] / popolazione * 100000
-
-
-
 # media mobile
 for df in elenco_df_EMS:
     df.sort_values(by='DATA', inplace=True)
-    df['mediamobile'] = df['conteggio_normalizzato'].rolling(window=3, min_periods=1).mean()
+    df['mediamobile'] = df['conteggio'].rolling(window=3, min_periods=1).mean()
+
+
+print("INIZIO CICLO FOR \n")
 
 
 ########################################################################################################################
@@ -105,7 +100,11 @@ for df in elenco_df_EMS:
 
 """ 4) Iterazione sui lag """
 
-for lag in range(8):
+lag = 0
+
+while lag <= 7:
+
+    print(f"\n \n LAG {lag}")
 
     # Creazione di un DataFrame vuoto per raccogliere tutti i KPI per il lag corrente
     df_kpi_lag = pd.DataFrame()
@@ -116,8 +115,7 @@ for lag in range(8):
     # Iterazione sui percentili degli inquinanti (funzione numpy che dipende dal passo)
     for perc_POLL in np.arange(perc_POLL_MIN, perc_POLL_MAX + passo_POLL, passo_POLL):
 
-
-        print(f"perc POLL =  {perc_POLL} \n ")   # per vedere a che punto siamo
+        print(f"\n perc POLL =  {perc_POLL} \n ")   # per vedere a che punto siamo
 
         # Calcolo dei picchi atmosferici
         if scelta_PERCENTILEorSOGLIA == 'PERC':
@@ -171,6 +169,11 @@ for lag in range(8):
 
     # Salvataggio del DataFrame dei KPI per il lag corrente (in automatico)
     df_kpi_lag.to_csv(f'{KPI_path}\\KPI_{inquinante}_{anno}_Griglia{scelta_griglia}_lag{lag}_{scelta_MAXorMEAN}_VARIPERCENTILI.csv', index=False)
+
+    print(f"\n \n FINE LAG {lag}")
+
+    lag += 1
+
 
 ########################################################################################################################
 ########################################################################################################################
