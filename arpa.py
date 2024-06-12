@@ -4,8 +4,6 @@ import numpy as np
 from shapely.geometry import Point
 from geopy.distance import geodesic
 
-
-# è necessario scaricare i dati di arpa e il file di idsensori per identificare l'inquinante di riferimento
 # sostituire i percorsi dei file in ingresso e della posizione in cui si vuole scaricare il file in uscita
 
 
@@ -34,8 +32,7 @@ def weighted_average(distances, values, max_radius=50):
 
 
 # Coordinate delle stazioni (latitudine, longitudine) e i rispettivi dati di inquinamento
-stations = pd.read_csv('/Users/sofiatorricella/Desktop/scuola/sosi/polimi/progetto/stazioni arpa/idSensori.csv')
-stations = stations[stations['NomeTipoSensore'] == 'Biossido di Azoto']
+stations = pd.read_csv('/Users/sofiatorricella/Desktop/polimi/progetto/stazioni arpa/idSensori.csv')
 
 
 
@@ -45,19 +42,14 @@ stations = gpd.GeoDataFrame(
     crs="EPSG:4326"  # Assumiamo che le coordinate delle stazioni siano in EPSG:4326
 )
 
-misure = pd.read_csv('/Users/sofiatorricella/Desktop/scuola/sosi/polimi/progetto/stazioni arpa/Dati_sensori_aria_2018_2023.csv')
-misure['Data'] = pd.to_datetime(misure['Data'], format='%d/%m/%Y %H:%M:%S')
+misure = pd.read_csv('/Users/sofiatorricella/Desktop/polimi/progetto/stazioni arpa/Dati_sensori_aria_2018_2023.csv')
 
-misure=misure[misure['Data']>='01-01-2017 00:00:00']
-misure=misure[misure['Data']<'01-01-2020 00:00:00']
 
 misure = misure.dropna(subset=['Valore'])
 
 # Calcola la media giornaliera per ogni stazione
 media_misure = misure.groupby(['idSensore', 'Data']).agg({'Valore': 'mean'}).reset_index()
 media_misure['idSensore'] = media_misure['idSensore'].astype('int64')
-
-media_misure['Valore'] = media_misure['Valore'].replace(-9999.00000, np.nan)
 
 stations.rename(columns={'IdSensore': 'idSensore'}, inplace=True)
 
