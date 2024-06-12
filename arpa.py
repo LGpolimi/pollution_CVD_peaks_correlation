@@ -31,17 +31,6 @@ def weighted_average(distances, values, max_radius=50):
     return weighted_sum / np.sum(weights)
 
 
-# Coordinate delle stazioni (latitudine, longitudine) e i rispettivi dati di inquinamento
-stations = pd.read_csv('/Users/sofiatorricella/Desktop/polimi/progetto/stazioni arpa/idSensori.csv')
-
-
-
-stations = gpd.GeoDataFrame(
-    stations,
-    geometry=gpd.points_from_xy(stations.lng, stations.lat),
-    crs="EPSG:4326"  # Assumiamo che le coordinate delle stazioni siano in EPSG:4326
-)
-
 misure = pd.read_csv('/Users/sofiatorricella/Desktop/polimi/progetto/stazioni arpa/Dati_sensori_aria_2018_2023.csv')
 
 
@@ -51,13 +40,9 @@ misure = misure.dropna(subset=['Valore'])
 media_misure = misure.groupby(['idSensore', 'Data']).agg({'Valore': 'mean'}).reset_index()
 media_misure['idSensore'] = media_misure['idSensore'].astype('int64')
 
-stations.rename(columns={'IdSensore': 'idSensore'}, inplace=True)
-
-# Unisci le medie giornaliere ai dati dei sensori
-stazioni = pd.merge(media_misure, stations, how='inner', on='idSensore')
 
 # Converti in GeoDataFrame
-stazioni = gpd.GeoDataFrame(stazioni, geometry='geometry')
+stazioni = gpd.GeoDataFrame(media_misure, geometry='geometry')
 
 # Definizione dei poligoni delle aree
 griglia = gpd.read_file('/Users/sofiatorricella/Desktop/scuola/sosi/polimi/progetto/griglie/LMB3A.shp')
