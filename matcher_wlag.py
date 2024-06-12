@@ -1,7 +1,7 @@
-import pandas as pd
 from datetime import datetime
 
-#matcher, ultima fase
+########################################################################################################################
+
 # X la funzione il primo dataset deve PER FORZA essere quello dei picchi inquinanti
 
 def comparatore(dsPOLL, dsEMS, colonnadataPOLL, colonnadataEMS, lag_giorni):
@@ -32,4 +32,6 @@ def comparatore(dsPOLL, dsEMS, colonnadataPOLL, colonnadataEMS, lag_giorni):
         kpi = (matching / len(dsPOLL)) * 100
 
     return kpi, matching, len(dsPOLL), len(dsEMS)
+
+########################################################################################################################
 
