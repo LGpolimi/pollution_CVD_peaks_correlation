@@ -5,6 +5,10 @@ from shapely.geometry import Point
 from geopy.distance import geodesic
 
 
+# è necessario scaricare i dati di arpa e il file di idsensori per identificare l'inquinante di riferimento
+# sostituire i percorsi dei file in ingresso e della posizione in cui si vuole scaricare il file in uscita
+
+
 def weighted_average(distances, values, max_radius=50):
     # Converti le distanze e i valori in array numpy
     distances = np.array(distances)
@@ -44,7 +48,8 @@ stations = gpd.GeoDataFrame(
 misure = pd.read_csv('/Users/sofiatorricella/Desktop/scuola/sosi/polimi/progetto/stazioni arpa/Dati_sensori_aria_2018_2023.csv')
 misure['Data'] = pd.to_datetime(misure['Data'], format='%d/%m/%Y %H:%M:%S')
 
-misure=misure[misure['Data']>='01-01-2023 00:00:00']
+misure=misure[misure['Data']>='01-01-2017 00:00:00']
+misure=misure[misure['Data']<'01-01-2020 00:00:00']
 
 # Calcola la media giornaliera per ogni stazione
 media_misure = misure.groupby(['idSensore', 'Data']).agg({'Valore': 'mean'}).reset_index()
