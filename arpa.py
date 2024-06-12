@@ -51,6 +51,8 @@ misure['Data'] = pd.to_datetime(misure['Data'], format='%d/%m/%Y %H:%M:%S')
 misure=misure[misure['Data']>='01-01-2017 00:00:00']
 misure=misure[misure['Data']<'01-01-2020 00:00:00']
 
+misure = misure.dropna(subset=['Valore'])
+
 # Calcola la media giornaliera per ogni stazione
 media_misure = misure.groupby(['idSensore', 'Data']).agg({'Valore': 'mean'}).reset_index()
 media_misure['idSensore'] = media_misure['idSensore'].astype('int64')
