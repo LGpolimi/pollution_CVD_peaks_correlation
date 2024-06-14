@@ -116,11 +116,14 @@ for date in unique_dates:
         if len(distances) > 0:
             weighted_avg = weighted_average(distances, pollution_values)  # Calcola la media pesata
             results.append((area.Index, area.geometry, getattr(area, 'name', 'N/A'), date, weighted_avg,
-                            'Particelle sospese PM2.5'))  # Aggiungi il risultato alla lista dei risultati
+                            'NO2'))  # Aggiungi il risultato alla lista dei risultati
 
 # Creare un DataFrame per i risultati
 result_df = pd.DataFrame(results,
                          columns=['Index', 'Geometry', 'Area', 'Data', 'Weighted Average Pollution', 'Pollutant'])
+
+result_df.to_csv(output_path+'ARPA_NO2_2023.csv')
+result_df['Data'] = result_df['Data'].to_string()
 
 # Creare un GeoDataFrame dai risultati
 result_gdf = gpd.GeoDataFrame(result_df, geometry='Geometry', crs='EPSG:32632')
