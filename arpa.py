@@ -3,16 +3,7 @@ import geopandas as gpd
 import numpy as np
 from shapely.geometry import Point
 from geopy.distance import geodesic
-import os
 
-# sostituire i percorsi dei file in ingresso e della posizione in cui si vuole scaricare il file in uscita
-
-input_path = 'D:\\Lorenzo Documents\\Lorenzo\\Research Documents\\2023 11 -- Pollution&Health\\2404_Tesi_bachelor_POLL_CVD\\Data\\datasources\\'
-output_path = 'D:\\Lorenzo Documents\\Lorenzo\\Research Documents\\2023 11 -- Pollution&Health\\2404_Tesi_bachelor_POLL_CVD\\Data\\processing\\'
-if not os.path.isdir(input_path):
-    os.makedirs(input_path)
-if not os.path.isdir(output_path):
-    os.makedirs(output_path)
 
 def weighted_average(distances, values, max_radius=50):
     # Converti le distanze e i valori in array numpy
@@ -38,21 +29,38 @@ def weighted_average(distances, values, max_radius=50):
     return weighted_sum / np.sum(weights)
 
 
-misure = pd.read_csv(input_path + 'stazioni arpa/ARPA_NO2_171819.csv')
+# Coordinate delle stazioni (latitudine, longitudine) e i rispettivi dati di inquinamento
+stations = pd.read_csv('/Users/sofiatorricella/Desktop/polimi/progetto/stazioni arpa/idSensori.csv')
+stations = stations[stations['NomeTipoSensore'] == 'Biossido di Azoto']
 
 
-misure = misure.dropna(subset=['Valore'])
+
+stations = gpd.GeoDataFrame(
+    stations,
+    geometry=gpd.points_from_xy(stations.lng, stations.lat),
+    crs="EPSG:4326"  # Assumiamo che le coordinate delle stazioni siano in EPSG:4326
+)
+
+misure = pd.read_csv('/Users/sofiatorricella/Desktop/polimi/progetto/stazioni arpa/ARPA_NO2_171819.csv')
+misure['Data'] = pd.to_datetime(misure['Data'], format='%d/%m/%Y %H:%M:%S')
+
 
 # Calcola la media giornaliera per ogni stazione
 media_misure = misure.groupby(['idSensore', 'Data']).agg({'Valore': 'mean'}).reset_index()
 media_misure['idSensore'] = media_misure['idSensore'].astype('int64')
 
+media_misure['Valore'] = media_misure['Valore'].replace(-9999.00000, np.nan)
+
+stations.rename(columns={'IdSensore': 'idSensore'}, inplace=True)
+
+# Unisci le medie giornaliere ai dati dei sensori
+stazioni = pd.merge(media_misure, stations, how='inner', on='idSensore')
 
 # Converti in GeoDataFrame
-stazioni = gpd.GeoDataFrame(media_misure, geometry='geometry')
+stazioni = gpd.GeoDataFrame(stazioni, geometry='geometry')
 
 # Definizione dei poligoni delle aree
-griglia = gpd.read_file(input_path + 'griglie/LMB3A.shp')
+griglia = gpd.read_file('/Users/sofiatorricella/Desktop/scuola/sosi/polimi/progetto/griglie/LMB3A.shp')
 
 # Converti la griglia in EPSG:4326 per calcolare i centroidi correttamente
 griglia = griglia.to_crs(epsg=4326)
@@ -64,12 +72,7 @@ unique_dates = stazioni['Data'].unique()
 # Calcola la media pesata dell'inquinamento per ciascun giorno per ogni area della griglia
 results = []
 
-n_dates = len(unique_dates)
-iti = 0
-
 for date in unique_dates:
-    iti = iti + 1
-    print('Working on',date,'processing =',(iti/n_dates)*100,'%')
     stazioni_filtered = stazioni[stazioni['Data'] == date]
 
     for area in griglia.itertuples():  # Itera su ogni riga del GeoDataFrame delle griglie
@@ -113,4 +116,4 @@ result_gdf.rename(columns={'Weighted Average Pollution': 'Valore'}, inplace=True
 result_gdf.drop(columns=['Index', 'Area'], inplace=True)
 
 
-result_gdf.to_file(output_path+'ARPA_NO2_2023.shp')
+result_gdf.to_file('/Users/sofiatorricella/Desktop/polimi/progetto/stazioni arpa/ARPA_NO2_2023.shp')
