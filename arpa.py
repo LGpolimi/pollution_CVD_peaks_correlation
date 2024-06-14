@@ -6,6 +6,7 @@ from geopy.distance import geodesic
 import os
 
 # sostituire i percorsi dei file in ingresso e della posizione in cui si vuole scaricare il file in uscita
+
 input_path = 'D:\\Lorenzo Documents\\Lorenzo\\Research Documents\\2023 11 -- Pollution&Health\\2404_Tesi_bachelor_POLL_CVD\\Data\\datasources\\'
 output_path = 'D:\\Lorenzo Documents\\Lorenzo\\Research Documents\\2023 11 -- Pollution&Health\\2404_Tesi_bachelor_POLL_CVD\\Data\\processing\\'
 if not os.path.isdir(input_path):
