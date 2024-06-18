@@ -49,7 +49,7 @@ stations = gpd.GeoDataFrame(
     crs="EPSG:4326"  # Assumiamo che le coordinate delle stazioni siano in EPSG:4326
 )
 
-misure = pd.read_csv(input_path + 'stazioni arpa/ARPA_NO2_171819.csv')
+misure = pd.read_csv(input_path + 'stazioni arpa/ARPA_NO2_171819.csv',low_memory=False)
 misure['Data'] = pd.to_datetime(misure['Data'], format='%Y-%m-%d %H:%M:%S')
 
 
